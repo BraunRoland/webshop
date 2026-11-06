@@ -14,7 +14,6 @@
         <div class="col-sm-12">
             <form method="post" class="rounded-4">
                 <div class="d-flex flex-wrap gap-3 mb-4">
-
                     <% products.forEach((e, index) => { %>
                         <div class="card" style="width: 280px; max-width: 280px;">
                             <div class="card-header">
@@ -25,7 +24,6 @@
                                     </label>
                                 </div>
                             </div>
-                            
                             <img class="card-img-top" style="height: 280px; object-fit: contain;" src="<%= e.img %>" alt="<%= e.name %>">
                             <div class="card-body">
                                 <h4 class="card-title"><%= e.name %></h4>
@@ -34,56 +32,133 @@
                         </div>    
                         <% }); %>
                 </div>
-                <div class="row">
-                    
+                <div class="row">     
                     <div class="col-md-12">
                         <label for="name" class="form-label">Név</label>
-                        <input type="text" class="form-control" name="name">
+                        <input type="text" 
+                            class="form-control <%= locals.nameErr? 'rossz' : '' %>" 
+                            name="name"
+                            placeholder="Gipsz Jakab"
+                            value="<%= locals.formData && formData.name? formData.name : '' %>"
+                        >
+                        <% if (locals.nameErr) { %>
+                            <p style="color: rgb(255, 56, 56);"><%= nameErr %></p>
+                        <% } %>
                     </div>
                 </div>
                 <div class="row">
-
                     <div class="col-md-6">
                         <label for="address" class="form-label">Szállítási cím</label>
-                        <input type="text" class="form-control" name="address">
+                        <input type="text" 
+                            class="form-control <%= locals.addressErr? 'rossz': '' %>" 
+                            name="address"
+                            placeholder="Város, Irányítószám, utca"
+                            value="<%= locals.formData && formData.address? formData.address : '' %>"
+                        >
+                        <% if (locals.addressErr) { %>
+                            <p style="color: rgb(255, 56, 56);"><%= addressErr %></p>
+                        <% } %>
                     </div>
                     <div class="col-md-6">
                         <label for="bill" class="form-label">Számlázási cím</label>
-                        <input type="text" class="form-control" name="bill">               
+                        <input 
+                            type="text" 
+                            class="form-control <%= locals.billErr? 'rossz' : '' %>" 
+                            name="bill"
+                            placeholder="Város, Irányítószám, utca"
+                            value="<%= locals.formData && formData.bill? formData.bill : '' %>"
+                        >
+                        <% if (locals.billErr) { %>
+                            <p style="color: rgb(255, 56, 56);"><%= billErr %></p>
+                        <% } %>              
                     </div>
                 </div>
                 
                 <div class="row">
                     <div class="col-md-6">
                         <label for="phone" class="form-label">Telefonszám</label>
-                        <input type="text" class="form-control" name="phone">
+                        <input 
+                            type="text" 
+                            class="form-control <%= locals.phoneErr? 'rossz': '' %>" 
+                            name="phone"
+                            placeholder="06201234567 v. +36201234567"
+                            value="<%= locals.formData && formData.phone? formData.phone : '' %>"
+                        >
+                        <% if (locals.phoneErr) { %>
+                            <p style="color: rgb(255, 56, 56);"><%= phoneErr %></p>
+                        <% } %>
                     </div>
                     <div class="col-md-6">
                         <label for="cupon" class="form-label">Kupon</label>
-                        <input type="text" class="form-control" name="cupon" placeholder="(opcionális) BB-SSSS">
+                        <input 
+                            type="text" 
+                            class="form-control <%= locals.cuponErr? 'rossz' : '' %>" 
+                            name="cupon" 
+                            placeholder="(opcionális) BB-SSSS"
+                            value="<%= locals.formData && formData.cupon? formData.cupon : '' %>"
+                        >
+                        <% if (locals.cuponErr) { %>
+                            <p style="color: rgb(255, 56, 56);"><%= cuponErr %></p>
+                        <% } %>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
                         <label for="card" class="form-label">Kártyaszám</label>
-                        <input type="text" class="form-control text-center" name="card" placeholder="XXXX-XXXX-XXXX-XXXX">
+                        <input 
+                            type="text" 
+                            class="form-control <%= locals.cardNumbErr? 'rossz' : '' %>" 
+                            name="card" 
+                            placeholder="XXXX-XXXX-XXXX-XXXX"
+                        >
+                        <% if (locals.cardNumbErr) { %>
+                            <p style="color: rgb(255, 56, 56);"><%= cardNumbErr %></p>
+                        <% } %>
                     </div>
                 </div>
                 <div class="row">
-    
                     <div class="col-md-4">
                         <label for="month" class="form-label">Hónap</label>
-                        <input type="text" class="form-control" name="month" placeholder="HH">
+                        <input 
+                            type="text" 
+                            class="form-control <%= locals.monthErr? 'rossz' : '' %>" 
+                            name="month" 
+                            placeholder="HH"
+                        >
+                        <% if (locals.monthErr) { %>
+                            <p style="color: rgb(255, 56, 56);"><%= monthErr %></p>
+                        <% } %>
                     </div>
                     <div class="col-md-4">
                         <label for="year" class="form-label">Év</label>
-                        <input type="text"class="form-control"  name="year" placeholder="ÉÉ">
+                        <input type="text"
+                            class="form-control <%= locals.yearErr? 'rossz' : ''%>"  
+                            name="year" 
+                            placeholder="ÉÉ"
+                        >
+                        <% if (locals.yearErr) { %>
+                            <p style="color: rgb(255, 56, 56);"><%= yearErr %></p>
+                        <% } %>
                     </div>
                     <div class="col-md-4">
                         <label for="cvc" class="form-label">CVC</label>
-                        <input type="text"class="form-control"  name="cvc">
+                        <input 
+                            type="text" 
+                            class="form-control <%= locals.cvcErr? 'rossz' : '' %>"  
+                            name="cvc"
+                        >
+                        <% if (locals.cvcErr) { %>
+                            <p style="color: rgb(255, 56, 56);"><%= cvcErr %></p>
+                        <% } %>
+                    </div> <br>
+                </div>
+                <% if (locals.expired || locals.success) { %>
+                 <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <p class="<%= locals.expired? 'expired': 'success' %>"><%= locals.expired? expired : success %></p>
                     </div>
-                </div> <br>
+                 </div>
+                <% } %>
                 <button type="submit" class="btn btn-success">Küldés</button>
            </form>
         </div>
