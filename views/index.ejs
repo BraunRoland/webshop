@@ -4,12 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        <%= title %>
     </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <h1><%= title %></h1>
-    Hello EJS!
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <form method="post" class="rounded-4">
+                <div class="d-flex flex-wrap gap-3 mb-4">
+
+                    <% products.forEach((e, index) => { %>
+                        <div class="card" style="width: 280px; max-width: 280px;">
+                            <div class="card-header">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="selectedProduct" id="product_<%= index %>" value="<%= e.name %>" required>
+                                    <label class="form-check-label" for="product_<%= index %>">
+                                        Ezt választom
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <img class="card-img-top" style="height: 280px; object-fit: contain;" src="<%= e.img %>" alt="<%= e.name %>">
+                            <div class="card-body">
+                                <h4 class="card-title"><%= e.name %></h4>
+                                <p class="card-text"><%= e.desc %></p>
+                            </div>
+                        </div>    
+                        <% }); %>
+                </div>
+                <div class="row">
+                    
+                    <div class="col-md-12">
+                        <label for="name" class="form-label">Név</label>
+                        <input type="text" class="form-control" name="name">
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <label for="address" class="form-label">Szállítási cím</label>
+                        <input type="text" class="form-control" name="address">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="bill" class="form-label">Számlázási cím</label>
+                        <input type="text" class="form-control" name="bill">               
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="phone" class="form-label">Telefonszám</label>
+                        <input type="text" class="form-control" name="phone">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="cupon" class="form-label">Kupon</label>
+                        <input type="text" class="form-control" name="cupon" placeholder="(opcionális) BB-SSSS">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="card" class="form-label">Kártyaszám</label>
+                        <input type="text" class="form-control text-center" name="card" placeholder="XXXX-XXXX-XXXX-XXXX">
+                    </div>
+                </div>
+                <div class="row">
+    
+                    <div class="col-md-4">
+                        <label for="month" class="form-label">Hónap</label>
+                        <input type="text" class="form-control" name="month" placeholder="HH">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="year" class="form-label">Év</label>
+                        <input type="text"class="form-control"  name="year" placeholder="ÉÉ">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="cvc" class="form-label">CVC</label>
+                        <input type="text"class="form-control"  name="cvc">
+                    </div>
+                </div> <br>
+                <button type="submit" class="btn btn-success">Küldés</button>
+           </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>
