@@ -12,7 +12,7 @@ export const products: ProductCard[] =  [
 
 export type Product = {
     product: string,
-    costumerName: string,
+    customerName: string,
     billingAddress: string,
     shippingAddress: string
 }

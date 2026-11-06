@@ -1,9 +1,7 @@
 import { Body, Controller, Get, Post, Render } from '@nestjs/common';
 import { AppService } from './app.service.js';
-import { products } from './data.js';
+import { Product, products } from './data.js';
 import { ProductDto } from './product.dto.js';
-import { error } from 'console';
-import { type } from 'os';
 
 @Controller()
 export class AppController {
@@ -19,7 +17,7 @@ export class AppController {
 
   @Post()
   @Render('index')
-  postProducts(@Body() body: ProductDto) {
+  async postProducts(@Body() body: ProductDto) {
     let error: boolean = false;
     const nameRegex = /^[A-Z]{1}[a-z]*\ [A-Z]{1}[a-z]*$/gm;
     const addressRegex = /^[A-Z]{1}[a-z]*\,\ \d\d\d\d\,\ [A-Z]{1}[a-z]*\ [a-z]*\ \d{1}$/m
@@ -35,8 +33,9 @@ export class AppController {
     const addressErr = addressRegex.test(body.address)? null : 'Rossz szállítási cím!';
     const billErr = addressRegex.test(body.bill)? null : 'Rossz számlázási cím!';
     let cuponErr = cuponRegex.test(body.cupon)? null : 'Rossz kupon kód!';
-    if (body.cupon == '') {
-      cuponErr == null
+    console.log(body.cupon.length == 0);
+    if (body.cupon.length == 0) {
+      cuponErr = null;
     }
     const cardNumbErr = cardNumberRegex.test(body.card)? null : 'Rossz bankkártya szám!';
     let monthErr = monthRegex.test(body.month)? null : 'Rossz hónap!';
@@ -54,8 +53,8 @@ export class AppController {
       cuponErr, cardNumbErr, monthErr,
       yearErr, cvcErr, phoneErr
     ]
-    const d = new Date(Number(body.year), Number(body.month)+1);
-    console.log(d)
+    const d = new Date(Number("20"+body.year), Number(body.month)+1);
+    console.log(d + " < " + new Date());
     const expired = 'Lejárt a bankkártyád!'
     if (monthErr == null && yearErr == null && d < new Date()) {
       errList.push(expired);
@@ -99,7 +98,14 @@ export class AppController {
     }
     else {
       // sikeres vásárlás - én írtam a kommenteket, csak már elveszek ezek nélkül
+      const p: Product = {
+        product: body.selectedProduct,
+        customerName: body.name,
+        shippingAddress: body.address,
+        billingAddress: body.bill
+      }
       return {
+        prod: await this.appService.createNewProduct(p),
         products: products,
         success: 'Sikeres vásárlás!'
       }

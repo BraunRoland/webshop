@@ -20,5 +20,9 @@ form {
 }
 
 .success {
-    color: rgb(112, 255, 69)
+    color: rgb(33, 139, 1)
+}
+
+button {
+    margin: 5px;
 }
