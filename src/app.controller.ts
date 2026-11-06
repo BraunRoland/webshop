@@ -22,7 +22,7 @@ export class AppController {
   postProducts(@Body() body: ProductDto) {
     let error: boolean = false;
     const nameRegex = /^[A-Z]{1}[a-z]*\ [A-Z]{1}[a-z]*$/gm;
-    const addressRegex = /^[A-Z]{1}[a-z]*\,\ \d\d\d\d\,\ [A-Z]{1}[a-z]*\ [a-z]*\ \d{1}/gm
+    const addressRegex = /^[A-Z]{1}[a-z]*\,\ \d\d\d\d\,\ [A-Z]{1}[a-z]*\ [a-z]*\ \d{1}$/m
     const phoneRegex = /^[0][6][0-9]{9}$/gm
     const phoneRegexPlus = /^[+][3][6][0-9]{9}$/gm
     const cuponRegex = /^[A-Z]{2}\-[0-9]{4}$/gm 
@@ -55,11 +55,13 @@ export class AppController {
       yearErr, cvcErr, phoneErr
     ]
     const d = new Date(Number(body.year), Number(body.month)+1);
+    console.log(d)
     const expired = 'Lejárt a bankkártyád!'
     if (monthErr == null && yearErr == null && d < new Date()) {
       errList.push(expired);
       error = true;
     }
+    console.log(errList)
     if (errList.some(i => typeof i == 'string')) {
       if (error) {
         // nem sikerült, a bankkártya lejárt
